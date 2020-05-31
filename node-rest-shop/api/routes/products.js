@@ -19,7 +19,7 @@ router.post('/', (req, res, next) => {
     product
     .save()
     .then(result => {
-        console.log(result);
+        //console.log(result);
         res.status(201).json({
             message: 'into the post products', 
             createdProduct: product
@@ -39,11 +39,11 @@ router.get('/:productId', (req, res, next) => {
    Product.findById(id)
    .exec()
    .then(doc => {
-       console.log(doc);
+       //console.log(doc);
        res.status(200).json({doc});
    })
    .catch(err => {
-       console.log(err);
+       //console.log(err);
        res.status(500).json({error: err});
    });
 });
