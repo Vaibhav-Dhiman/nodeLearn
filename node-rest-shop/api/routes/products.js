@@ -3,12 +3,17 @@ const router = express.Router();
 const Product = require('./models/products');
 const mongoose = require('mongoose');
 
+// working fine below
 router.get('/', (req, res, next) => {
+    Product.find({}).then(function (products) {
+        res.send(products);
         res.status(200).json({
-            message: 'into the get products' 
+            message: 'getProducts'            
         });
+    });
 });
 
+// working fine below
 router.post('/', (req, res, next) => {
     const product = new Product({
         _id: new mongoose.Types.ObjectId(),
@@ -33,6 +38,7 @@ router.post('/', (req, res, next) => {
         });
     });
 });
+
 
 router.get('/:productId', (req, res, next) => {
     const id = req.param.productId;
