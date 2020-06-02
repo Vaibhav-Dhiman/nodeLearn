@@ -40,16 +40,9 @@ router.post('/', (req, res, next) => {
 });
 
 router.get('/:orderId', (req, res, next) => {
-    // const id = req.param.orderId;
-    // res.status(200).json({
-    //     message: 'Order details',
-    //     orderId: req.param.orderId
-    // });
-    const id = req.param.productId;
-    Order.findById(id)
-    .exec()
+    Order.findById(orderId)
     .then(doc => {
-        //console.log(doc);
+        if (!doc) { return res.status(404).end();}
         res.status(200).json({doc});
     })
     .catch(err => {

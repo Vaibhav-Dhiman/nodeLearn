@@ -29,7 +29,9 @@ app.use((req,res,next) => {
 app.use('/products', productsRoutes);
 app.use('/orders', ordersRoutes);
 
-mongoose.connect('mongodb://localhost/ProductOrder');
+mongoose.connect('mongodb+srv://vaibhav:' +
+process.env.MONGO_ATLAS_PW +
+'@cluster0-4ttpq.mongodb.net/test?retryWrites=true&w=majority', {useNewUrlParser: true});
 
 // mongodb+srv://vaibhav:<password>@cluster0-4ttpq.mongodb.net/test?retryWrites=true&w=majority
 
