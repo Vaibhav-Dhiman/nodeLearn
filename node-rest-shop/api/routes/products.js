@@ -24,7 +24,6 @@ router.post('/', (req, res, next) => {
     product
     .save()
     .then(result => {
-        //console.log(result);
         res.status(201).json({
             message: 'into the post products', 
             createdProduct: product
@@ -39,34 +38,50 @@ router.post('/', (req, res, next) => {
     });
 });
 
-
+// working file below
 router.get('/:productId', (req, res, next) => {
-    const id = req.param.productId;
-   Product.findById(id)
-   .exec()
-   .then(doc => {
-       //console.log(doc);
-       res.status(200).json({doc});
-   })
-   .catch(err => {
-       //console.log(err);
-       res.status(500).json({error: err});
-   });
-});
 
-
-router.patch('/:productId', (req, res, next) => {
+    Product.findById(req.params.productId).then(function (products) {
+        res.send(products);
         res.status(200).json({
-            message: 'updated product'
+            message: 'getProducts by id'            
         });
-});
-
-
-router.delete('/:productId', (req, res, next) => {
-    res.status(200).json({
-        message: 'delete product'
     });
 });
 
+
+// need to work on below
+router.patch('/:productId', (req, res, next) => {
+       const id = req.params.productId;
+       const updateOps = {};
+       for (const ops of req.body) {
+           updateOps[ops.propName] = ops.value;
+       }
+       Product.update({_id: id}, {$set: updateOps})
+       .exec()
+       .then(result => {
+           console.log(result);
+           res.status(200).json({result});
+       })
+       .catch(err => {
+           console.log(err);
+       }); 
+});
+
+
+// worked deleted below
+router.delete('/:productId', (req, res, next) => {
+   const id = req.params.productId;
+   Product.remove({_id: id})
+   .exec()
+   .then(result => {
+    res.status(200).json(result);
+   })
+   .catch(err => {
+       res.status(500).json({
+           message: err
+       });
+   });
+});
 
 module.exports = router;

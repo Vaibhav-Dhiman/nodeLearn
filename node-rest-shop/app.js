@@ -7,6 +7,7 @@ const mongoose = require('mongoose');
 const productsRoutes = require('./api/routes/products');
 const ordersRoutes = require('./api/routes/oders');
 
+const mongoConnectionString = 'mongodb://localhost:27017/ProductOrder';
 // morgon used for loging
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({extended: false}));
@@ -29,10 +30,10 @@ app.use((req,res,next) => {
 app.use('/products', productsRoutes);
 app.use('/orders', ordersRoutes);
 
-mongoose.connect('mongodb+srv://vaibhav:' +
-process.env.MONGO_ATLAS_PW +
-'@cluster0-4ttpq.mongodb.net/test?retryWrites=true&w=majority', {useNewUrlParser: true});
 
+mongoose.connect(mongoConnectionString, {useNewUrlParser: true, useUnifiedTopology: true});
+
+//mongoose.connect('mongodb://localhost:27017/ProductOrder',{ useNewUrlParser: true });
 // mongodb+srv://vaibhav:<password>@cluster0-4ttpq.mongodb.net/test?retryWrites=true&w=majority
 
 app.use((req, res, next) => {
