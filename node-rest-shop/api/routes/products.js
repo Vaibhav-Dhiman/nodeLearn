@@ -53,23 +53,17 @@ router.get('/:productId', (req, res, next) => {
 // need to work on below
 router.patch('/:productId', (req, res, next) => {
        const id = req.params.productId;
-       const updateOps = {};
-       for (const ops of req.body) {
-           updateOps[ops.propName] = ops.value;
-       }
-       Product.update({_id: id}, {$set: updateOps})
-       .exec()
-       .then(result => {
-           console.log(result);
-           res.status(200).json({result});
-       })
-       .catch(err => {
-           console.log(err);
-       }); 
+       const productName = req.params.name;
+       const productPrice = req.params.price;
+        const updateProduct = Product.updateOne(
+            {_id: id}, 
+            {$set: {name: productName}}
+            );
+        res.json(updateProduct);
 });
 
 
-// worked deleted below
+// working fine below
 router.delete('/:productId', (req, res, next) => {
    const id = req.params.productId;
    Product.remove({_id: id})
