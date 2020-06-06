@@ -54,12 +54,25 @@ router.get('/:productId', (req, res, next) => {
 router.patch('/:productId', (req, res, next) => {
        const id = req.params.productId;
        const productName = req.params.name;
-       const productPrice = req.params.price;
-        const updateProduct = Product.updateOne(
-            {_id: id}, 
-            {$set: {name: productName}}
-            );
-        res.json(updateProduct);
+
+       Product.findById(id, function(data){
+           console.log(data);
+        
+        //    data.name = productName?productName:data.name;
+
+        // data.save(function(err){
+        //     if(err) throw err;
+        //     res.send("data updated successfully");
+        // });
+
+       });
+
+    //    console.log(JSON.parse(productName));
+    //     const updateProduct = Product.updateOne(
+    //         {_id: id}, 
+    //         {$set: {name: productName}}
+    //         );
+    //     res.json(updateProduct);
 });
 
 
