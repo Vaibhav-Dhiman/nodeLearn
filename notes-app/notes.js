@@ -4,6 +4,6 @@ const getNotes = function(txt) {
     return txt
 }
 
-// can'twe export multiple functions here as below?
+// can't we export multiple functions here as below?
 
 module.exports = getNotes
