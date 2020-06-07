@@ -1,18 +1,15 @@
 const fs = require('fs')
+const chalk = require('chalk')
 
-const getNotes = function(txt) {
+const getNotes = () => {
     // console.log('entered in notes function')
     return 'Your notes...'
 }
 
-const addNote = function(title, body) {
+const addNote = (title, body) => {
     const notes = loadNotes()
-
     // array filter exmple below
-    const dupicateNotes = notes.filter(function (note){
-      //  console.log(note.Title)
-        return note.Title == title
-    })
+    const dupicateNotes = notes.filter((note) => note.Title === title)
     // console.log(dupicateNotes)
 
     if (dupicateNotes.length === 0) {
@@ -22,31 +19,35 @@ const addNote = function(title, body) {
         })
         //console.log(notes)
         saveNotes(notes)
-        console.log('New Note Added')
+        // console.log('New Note Added')
+        console.log(chalk.green.inverse('New Note Added'))
     }
     else {
-        console.log('Note Failed To Add As Already Found')
+        console.log(chalk.red.inverse('Note Failed To Add As Already Found'))
     }
 }
 
-const removeNote = function(title) {
+const removeNote = (title) => {
     const notes = loadNotes()
-    const notesToKeep = notes.filter(function(note){
-        //console.log(note.Title)
-        return note.Title !== title
-    })
+    const notesToKeep = notes.filter((note) => note.Title !== title)
+    if(notes.length > notesToKeep) {
+        console.log(chalk.green.inverse(title + ' Removed From Notes'))
+        saveNotes(notesToKeep)
+    }
+
+    else {
+        console.log(chalk.red.inverse('No Note Found'))
+    }
     
-    console.log(title + ' Removed From List')
-    saveNotes(notesToKeep)
 
 }
 
-const saveNotes = function(notes) {
+const saveNotes = (notes) => {
     const dataJson = JSON.stringify(notes)
     fs.writeFileSync('notes.json', dataJson)
 }
 
-const loadNotes = function() {
+const loadNotes = () => {
     try {
         
         const dataBuffer =  fs.readFileSync('notes.json')
