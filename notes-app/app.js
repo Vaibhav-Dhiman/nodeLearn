@@ -49,15 +49,24 @@ yargs.command({
     command: 'list',
     describe: 'List your notes',
     handler() {
-        console.log('List all notes!')
+        console.log(chalk.blueBright.inverse('List of all notes'))
+        notes.listNotes()
     }
 })
 
 yargs.command({
     command: 'read',
     describe: 'Reading a note',
-    handler() {
-        console.log('Reading a note!')
+    builder: {
+        title: {
+            describe: 'ReadNotes',
+            demandOption: true,
+            type: 'string'
+        }
+    },
+    handler(argv) {
+        console.log(chalk.yellowBright.inverse('Reading All Notes'))
+        notes.readNotes(argv.title)
     }
 })
 

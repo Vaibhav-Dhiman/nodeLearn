@@ -1,18 +1,15 @@
 const fs = require('fs')
 const chalk = require('chalk')
 
-const getNotes = () => {
-    // console.log('entered in notes function')
-    return 'Your notes...'
-}
-
 const addNote = (title, body) => {
     const notes = loadNotes()
     // array filter exmple below
-    const dupicateNotes = notes.filter((note) => note.Title === title)
+     const dupicateNote = notes.find((note) => note.Title === title) // find will stop when see the first duplicate in array object
+    // const dupicateNotes = notes.filter((note) => note.Title === title) // filter will see others duplicate till last even after finding duplicate
+
     // console.log(dupicateNotes)
 
-    if (dupicateNotes.length === 0) {
+    if (!dupicateNote) {
         notes.push({
             Title: title,
             Body: body
@@ -30,7 +27,7 @@ const addNote = (title, body) => {
 const removeNote = (title) => {
     const notes = loadNotes()
     const notesToKeep = notes.filter((note) => note.Title !== title)
-    if(notes.length > notesToKeep) {
+    if(notes.length > notesToKeep.length) {
         console.log(chalk.green.inverse(title + ' Removed From Notes'))
         saveNotes(notesToKeep)
     }
@@ -38,8 +35,21 @@ const removeNote = (title) => {
     else {
         console.log(chalk.red.inverse('No Note Found'))
     }
-    
+}
 
+const readNotes = (title) => {
+    const notes = loadNotes()
+    const findNotes = notes.find((note)=> note.Title == title)
+    if (findNotes) console.log(findNotes.Title, findNotes.Body)
+    else console.log(chalk.redBright.inverse('not found'))
+}
+
+
+const listNotes = () => {
+    const notes = loadNotes()
+   notes.forEach(note => {
+       console.log(note.Title)
+   });
 }
 
 const saveNotes = (notes) => {
@@ -66,5 +76,7 @@ const loadNotes = () => {
 module.exports = {
     getNotes: getNotes,
     addNote: addNote,
-    removeNote: removeNote
+    removeNote: removeNote,
+    listNotes: listNotes,
+    readNotes: readNotes
 }
