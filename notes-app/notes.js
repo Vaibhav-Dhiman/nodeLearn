@@ -7,6 +7,10 @@ const addNote = (title, body) => {
      const dupicateNote = notes.find((note) => note.Title === title) // find will stop when see the first duplicate in array object
     // const dupicateNotes = notes.filter((note) => note.Title === title) // filter will see others duplicate till last even after finding duplicate
 
+    //debugger
+    // run below command to start debug code and use above debugger to entry start debug
+    //node --inspect-brk app.js  add --title="Book Reading" --body="Need To Read More Books"
+    
     // console.log(dupicateNotes)
 
     if (!dupicateNote) {
@@ -74,7 +78,6 @@ const loadNotes = () => {
 // use below
 
 module.exports = {
-    getNotes: getNotes,
     addNote: addNote,
     removeNote: removeNote,
     listNotes: listNotes,
